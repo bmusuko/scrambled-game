@@ -2,6 +2,7 @@ from PIL import Image, ImageDraw, ImageFont
 import random
 
 questions = ["Levi", "ONIZUKA"]
+out_folder = "image"
 
 
 def gen_image(idx, msg):
@@ -19,19 +20,20 @@ def gen_image(idx, msg):
         font=font,
     )
 
-    im.save(f"char/{idx}.png", "PNG")
+    im.save(f"{out_folder}/{idx}.png", "PNG")
 
 
 def main():
     i = 1
     for question in questions:
         temp = list(question.replace(" ", "").upper())
-        random.shuffle(temp)
-        temp = "".join(temp)
-        gen_image(i, temp)
+        start = temp[0]
+        new_temp = temp[1:]
+        random.shuffle(new_temp)
+        new_temp.insert(random.randint(1, len(new_temp)), start)
+        new_temp = "".join(new_temp)
+        gen_image(i, new_temp)
         i += 1
 
 
 main()
-
-# gen_image(0, "CODEGEASS")
